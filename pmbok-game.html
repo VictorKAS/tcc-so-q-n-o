@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM BOK – The Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div>
+  <img src="/img/plano de fundo.jpg" alt="plano de fundo" style="width:100%;height:100%;">
+</div>
+
+<!-- UI OVERLAY -->
+<div id="ui">
+  <div id="title-block">
+    <div id="title-pmbok">PM BOK</div>
+    <div id="title-game">The Game</div>
+  </div>
+  <button id="btn-start" onclick="showModal()">Começar</button>
+  <div id="register-line">
+    Faça o Cadastro para salvar o progresso
+    <a href="#" onclick="showModal(); return false;">aqui</a>
+  </div>
+</div>
+
+<!-- SCROLL HINT -->
+<div id="scroll-hint">
+  <span>Pressione para iniciar</span>
+  <div class="chevron">▾</div>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div id="modal">
+    <button id="close-modal" onclick="closeModal()">✕</button>
+    <h2>⚔ Criar Conta ⚔</h2>
+    <p>Cadastre-se para salvar seu progresso e retomar sua jornada quando quiser.</p>
+    <div class="field-group">
+      <label>Nome do Herói</label>
+      <input type="text" placeholder="Seu nome de aventureiro...">
+    </div>
+    <div class="field-group">
+      <label>E-mail</label>
+      <input type="email" placeholder="seu@email.com">
+    </div>
+    <div class="field-group">
+      <label>Senha</label>
+      <input type="password" placeholder="••••••••">
+    </div>
+    <div id="modal-btns">
+      <button class="mbtn mbtn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="mbtn mbtn-primary">Registrar ✦</button>
+    </div>
+  </div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
