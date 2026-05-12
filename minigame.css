@@ -176,8 +176,8 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr 1fr;
-  gap: 8px;
-  padding: 4px;
+  gap: 38px;
+  padding: 40px;
 }
 
 /* ─── DROP ZONE ─── */
@@ -235,8 +235,32 @@ body {
   grid-column: 1 / -1;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 16px;
+}
+
+#bottombar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+#btn-back {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.55rem;
+  color: rgba(255,255,255,0.55);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 3px;
+  padding: 0.4em 0.8em;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+}
+#btn-back:hover {
+  color: rgba(255,255,255,0.9);
+  border-color: rgba(255,255,255,0.5);
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
 }
 
 #score-display {

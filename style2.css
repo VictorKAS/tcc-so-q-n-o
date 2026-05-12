@@ -196,3 +196,25 @@ body {
   pointer-events: none;
   z-index: 20;
 }
+
+#bottombar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px;
+}
+
+#btn-back {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.55rem;
+  color: rgba(255,255,255,0.55);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 3px;
+  padding: 0.4em 0.8em;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+}
