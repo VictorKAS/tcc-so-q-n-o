@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM BOK – Mini-Game: Grupos</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="minigame.css">
+</head>
+<body>
+
+<!-- ── SCENE BG: pixel-art tavern ── -->
+<div id="scene">
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
+    viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid slice"
+    style="position:absolute;inset:0;">
+
+    <!-- Base wall -->
+    <rect x="0" y="0" width="1000" height="620" fill="#1c1006"/>
+    <rect x="0" y="0" width="1000" height="460" fill="#2a1a08"/>
+
+    <!-- Stone horizontal lines -->
+    <rect x="0" y="40"  width="1000" height="2" fill="#1a0e04" opacity="0.45"/>
+    <rect x="0" y="85"  width="1000" height="2" fill="#1a0e04" opacity="0.45"/>
+    <rect x="0" y="130" width="1000" height="2" fill="#1a0e04" opacity="0.45"/>
+    <rect x="0" y="175" width="1000" height="2" fill="#1a0e04" opacity="0.45"/>
+    <rect x="0" y="220" width="1000" height="2" fill="#1a0e04" opacity="0.45"/>
+    <rect x="0" y="265" width="1000" height="2" fill="#1a0e04" opacity="0.45"/>
+    <rect x="0" y="310" width="1000" height="2" fill="#1a0e04" opacity="0.45"/>
+    <rect x="0" y="355" width="1000" height="2" fill="#1a0e04" opacity="0.45"/>
+    <rect x="0" y="400" width="1000" height="2" fill="#1a0e04" opacity="0.45"/>
+    <rect x="0" y="445" width="1000" height="2" fill="#1a0e04" opacity="0.45"/>
+
+    <!-- Ceiling beams -->
+    <rect x="0" y="0" width="1000" height="52" fill="#3a2008"/>
+    <rect x="0" y="0" width="1000" height="14" fill="#5c3618"/>
+    <rect x="0" y="14" width="1000" height="2"  fill="#1e0e04"/>
+    <rect x="0" y="16" width="1000" height="14" fill="#523010"/>
+    <rect x="0" y="30" width="1000" height="2"  fill="#1e0e04"/>
+    <rect x="0" y="32" width="1000" height="14" fill="#5c3618"/>
+    <rect x="0" y="46" width="1000" height="2"  fill="#1e0e04"/>
+    <rect x="0" y="48" width="1000" height="6"  fill="#1a0c04" opacity="0.7"/>
+    <!-- Vertical beam posts -->
+    <rect x="170" y="0" width="16" height="70" fill="#3a2008"/>
+    <rect x="172" y="0" width="12" height="70" fill="#4a2a10"/>
+    <rect x="400" y="0" width="16" height="70" fill="#3a2008"/>
+    <rect x="402" y="0" width="12" height="70" fill="#4a2a10"/>
+    <rect x="630" y="0" width="16" height="70" fill="#3a2008"/>
+    <rect x="632" y="0" width="12" height="70" fill="#4a2a10"/>
+    <rect x="850" y="0" width="16" height="70" fill="#3a2008"/>
+    <rect x="852" y="0" width="12" height="70" fill="#4a2a10"/>
+
+    <!-- LEFT: stone arch -->
+    <path d="M0,52 L0,620 L220,620 L220,52 Q220,180 110,180 Q0,180 0,52 Z" fill="#2e1e0e" opacity="0.6"/>
+
+    <!-- LEFT TABLE -->
+    <rect x="20" y="350" width="180" height="14" rx="2" fill="#5c3a18"/>
+    <rect x="30" y="364" width="20" height="60" fill="#3e2810"/>
+    <rect x="160" y="364" width="20" height="60" fill="#3e2810"/>
+    <!-- Candles on table -->
+    <rect x="70" y="328" width="8" height="22" fill="#c8a020"/>
+    <ellipse cx="74" cy="327" rx="5" ry="7" fill="#ffd060" opacity="0.9"/>
+    <ellipse cx="74" cy="322" rx="3" ry="5" fill="#fff5c0" opacity="0.7"/>
+    <rect x="120" y="322" width="8" height="28" fill="#c8a020"/>
+    <ellipse cx="124" cy="321" rx="5" ry="7" fill="#ffd060" opacity="0.9"/>
+    <ellipse cx="124" cy="316" rx="3" ry="5" fill="#fff5c0" opacity="0.7"/>
+    <rect x="155" y="326" width="6" height="24" fill="#c8a020"/>
+    <ellipse cx="158" cy="325" rx="4" ry="6" fill="#ffd060" opacity="0.9"/>
+
+    <!-- LEFT FIREPLACE glow -->
+    <radialGradient id="fg" cx="10%" cy="80%" r="30%">
+      <stop offset="0%" stop-color="#e06010" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#e06010" stop-opacity="0"/>
+    </radialGradient>
+    <rect x="0" y="0" width="1000" height="620" fill="url(#fg)"/>
+
+    <!-- RIGHT: shelves + candles -->
+    <rect x="780" y="80"  width="210" height="8" fill="#5c3a18"/>
+    <rect x="780" y="140" width="210" height="8" fill="#5c3a18"/>
+    <rect x="780" y="200" width="210" height="8" fill="#5c3a18"/>
+    <!-- Bottles right -->
+    <rect x="790" y="60" width="9"  height="20" rx="2" fill="#608048"/>
+    <rect x="802" y="56" width="10" height="24" rx="2" fill="#7a4058"/>
+    <rect x="815" y="62" width="8"  height="18" rx="2" fill="#406898"/>
+    <rect x="826" y="58" width="10" height="22" rx="2" fill="#786018"/>
+    <rect x="840" y="60" width="8"  height="20" rx="2" fill="#587838"/>
+    <rect x="852" y="54" width="9"  height="26" rx="2" fill="#682848"/>
+    <rect x="864" y="62" width="10" height="18" rx="2" fill="#284878"/>
+    <rect x="878" y="58" width="8"  height="22" rx="2" fill="#507838"/>
+    <rect x="890" y="56" width="10" height="24" rx="2" fill="#7a3820"/>
+    <rect x="903" y="62" width="9"  height="18" rx="2" fill="#286078"/>
+    <!-- Shelf 2 right -->
+    <rect x="790" y="120" width="9"  height="20" rx="2" fill="#587040"/>
+    <rect x="802" y="116" width="10" height="24" rx="2" fill="#803858"/>
+    <rect x="815" y="122" width="8"  height="18" rx="2" fill="#385888"/>
+    <rect x="826" y="118" width="10" height="22" rx="2" fill="#705810"/>
+    <rect x="840" y="120" width="8"  height="20" rx="2" fill="#507030"/>
+    <rect x="852" y="114" width="9"  height="26" rx="2" fill="#602040"/>
+    <rect x="864" y="120" width="10" height="20" rx="2" fill="#284870"/>
+    <!-- Candle right -->
+    <rect x="940" y="128" width="7" height="18" fill="#d0b060"/>
+    <ellipse cx="943" cy="127" rx="5" ry="7" fill="#ffd060" opacity="0.95"/>
+    <ellipse cx="943" cy="122" rx="3" ry="5" fill="#fff8d0" opacity="0.7"/>
+    <!-- Shelf 3 right: big jars -->
+    <rect x="790" y="170" width="20" height="30" rx="4" fill="#5a3820"/>
+    <rect x="815" y="172" width="16" height="28" rx="3" fill="#704030"/>
+    <rect x="836" y="168" width="22" height="32" rx="4" fill="#4a6030"/>
+    <rect x="863" y="172" width="18" height="28" rx="3" fill="#603850"/>
+    <rect x="886" y="168" width="20" height="32" rx="4" fill="#286060"/>
+
+    <!-- WINDOW center-right -->
+    <rect x="490" y="60" width="130" height="120" fill="#0d1828"/>
+    <rect x="486" y="56" width="138" height="8"  fill="#5c3a18"/>
+    <rect x="486" y="176" width="138" height="8" fill="#5c3a18"/>
+    <rect x="486" y="56" width="8" height="128" fill="#5c3a18"/>
+    <rect x="616" y="56" width="8" height="128" fill="#5c3a18"/>
+    <rect x="486" y="116" width="138" height="5" fill="#5c3a18"/>
+    <rect x="551" y="56" width="5" height="128" fill="#5c3a18"/>
+    <rect x="490" y="60" width="130" height="120" fill="#0a1a30"/>
+    <!-- Moon -->
+    <ellipse cx="555" cy="105" rx="20" ry="20" fill="#d4c880"/>
+    <ellipse cx="564" cy="100" rx="13" ry="13" fill="#0a1a30"/>
+    <!-- Stars -->
+    <circle cx="500" cy="72"  r="1.5" fill="#b0bcc8"/>
+    <circle cx="608" cy="70"  r="1.5" fill="#b0bcc8"/>
+    <circle cx="498" cy="160" r="1.5" fill="#b0bcc8"/>
+    <circle cx="610" cy="155" r="1.5" fill="#b0bcc8"/>
+
+    <!-- Floor -->
+    <rect x="0" y="455" width="1000" height="165" fill="#241408"/>
+    <rect x="0" y="455" width="1000" height="3"   fill="#140c04"/>
+    <rect x="0" y="490" width="1000" height="2"   fill="#140c04"/>
+    <rect x="0" y="525" width="1000" height="2"   fill="#140c04"/>
+    <rect x="0" y="560" width="1000" height="2"   fill="#140c04"/>
+    <rect x="0" y="595" width="1000" height="2"   fill="#140c04"/>
+    <rect x="125" y="455" width="2" height="165" fill="#140c04" opacity="0.5"/>
+    <rect x="250" y="455" width="2" height="165" fill="#140c04" opacity="0.5"/>
+    <rect x="375" y="455" width="2" height="165" fill="#140c04" opacity="0.5"/>
+    <rect x="500" y="455" width="2" height="165" fill="#140c04" opacity="0.5"/>
+    <rect x="625" y="455" width="2" height="165" fill="#140c04" opacity="0.5"/>
+    <rect x="750" y="455" width="2" height="165" fill="#140c04" opacity="0.5"/>
+    <rect x="875" y="455" width="2" height="165" fill="#140c04" opacity="0.5"/>
+    <!-- Floor fire glow -->
+    <rect x="0" y="455" width="250" height="165" fill="#2e1206" opacity="0.35"/>
+
+    <!-- Book on floor table -->
+    <rect x="360" y="500" width="200" height="80" rx="2" fill="#3a2010"/>
+    <rect x="360" y="500" width="200" height="7"  rx="2" fill="#4e2e18"/>
+    <rect x="362" y="507" width="196" height="73" fill="#2e1808"/>
+    <!-- Open book -->
+    <rect x="376" y="488" width="170" height="26" rx="2" fill="#e4d488"/>
+    <rect x="458" y="486" width="6"   height="30" fill="#c09858" rx="1"/>
+    <line x1="384" y1="496" x2="455" y2="496" stroke="#9a8040" stroke-width="1" opacity="0.5"/>
+    <line x1="384" y1="502" x2="455" y2="502" stroke="#9a8040" stroke-width="1" opacity="0.5"/>
+    <line x1="384" y1="508" x2="455" y2="508" stroke="#9a8040" stroke-width="1" opacity="0.5"/>
+    <line x1="466" y1="496" x2="538" y2="496" stroke="#9a8040" stroke-width="1" opacity="0.5"/>
+    <line x1="466" y1="502" x2="538" y2="502" stroke="#9a8040" stroke-width="1" opacity="0.5"/>
+    <line x1="466" y1="508" x2="538" y2="508" stroke="#9a8040" stroke-width="1" opacity="0.5"/>
+
+    <!-- Overall warm ambient -->
+    <radialGradient id="aw" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#d07010" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#d07010" stop-opacity="0"/>
+    </radialGradient>
+    <rect x="0" y="0" width="1000" height="620" fill="url(#aw)"/>
+    <!-- Vignette -->
+    <rect x="0" y="0" width="1000" height="620"
+      fill="none" stroke="#000" stroke-width="80" stroke-opacity="0.55"/>
+  </svg>
+</div>
+
+<!-- ── GHOST drag element ── -->
+<div id="drag-ghost"></div>
+
+<!-- ── SCANLINES ── -->
+<div id="scanlines"></div>
+
+<!-- ── APP LAYOUT ── -->
+<div id="app">
+
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <h1 id="title-grupos">Grupos</h1>
+    <div id="topbar-right">
+      <button id="btn-reset" onclick="resetGame()">Resetar</button>
+      <span id="level-display">Level 0</span>
+    </div>
+  </div>
+
+  <!-- PROCESSOS PANEL (left) -->
+  <div id="processos-panel">
+    <div id="processos-header">Processos</div>
+    <div id="processos-list">
+      <!-- Cards renderizados por JS -->
+    </div>
+  </div>
+
+  <!-- GRUPOS GRID (right) -->
+  <div id="grupos-area">
+
+    <div class="drop-zone" data-zone="iniciacao">
+      <div class="drop-zone-header">Iniciação</div>
+      <div class="drop-zone-cards"></div>
+    </div>
+
+    <div class="drop-zone" data-zone="planejamento">
+      <div class="drop-zone-header">Planejamento</div>
+      <div class="drop-zone-cards"></div>
+    </div>
+
+    <div class="drop-zone" data-zone="execucao">
+      <div class="drop-zone-header">Execução</div>
+      <div class="drop-zone-cards"></div>
+    </div>
+
+    <div class="drop-zone" data-zone="monitoramento">
+      <div class="drop-zone-header">Monit. e Controle</div>
+      <div class="drop-zone-cards"></div>
+    </div>
+
+    <div class="drop-zone" data-zone="encerramento">
+      <div class="drop-zone-header">Encerramento</div>
+      <div class="drop-zone-cards"></div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div id="bottombar">
+    <span id="score-display"></span>
+    <button id="btn-check" onclick="checkResult()">
+      Conferir Resultado
+    </button>
+  </div>
+
+</div>
+
+<!-- RESULT MODAL -->
+<div id="result-overlay" onclick="handleResultOverlay(event)">
+  <div id="result-box">
+    <div id="result-title">⚔ Resultado ⚔</div>
+    <div id="result-score">0 / 10</div>
+    <div id="result-msg"></div>
+    <button id="btn-result-close" onclick="closeResult()">Continuar</button>
+  </div>
+</div>
+
+<script src="minigame.js"></script>
+<script>
+  function handleResultOverlay(e) {
+    if (e.target === document.getElementById('result-overlay')) closeResult();
+  }
+</script>
+</body>
+</html>
