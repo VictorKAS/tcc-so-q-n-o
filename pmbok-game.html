@@ -19,10 +19,10 @@
     <div id="title-pmbok">PM BOK</div>
     <div id="title-game">The Game</div>
   </div>
-  <button id="btn-start" onclick="showModal()">Começar</button>
+  <button id="btn-start" onclick="showCadastroModal()">Começar</button>
   <div id="register-line">
-    Faça o login aqui
-    <a href="#" onclick="showModal(); return false;">aqui</a>
+    Faça o login
+    <a href="#" onclick="showLoginModal(); return false;">aqui</a>
   </div>
 </div>
 
@@ -31,10 +31,10 @@
   <button id="btn-scroll" onclick="window.location.href='guia.html'">Pressione para iniciar</button>
 </div>
 
-<!-- MODAL -->
-<div id="modal-overlay" onclick="handleOverlayClick(event)">
+<!-- MODAL CADASTRO -->
+<div id="modal-cadastro-overlay" onclick="handleCadastroOverlayClick(event)">
   <div id="modal">
-    <button id="close-modal" onclick="closeModal()">✕</button>
+    <button id="close-modal" onclick="closeCadastroModal()">✕</button>
     <h2>⚔ Criar Conta ⚔</h2>
     <p>Cadastre-se para salvar seu progresso e retomar sua jornada quando quiser.</p>
     <div class="field-group">
@@ -50,8 +50,35 @@
       <input type="password" placeholder="••••••••">
     </div>
     <div id="modal-btns">
-      <button class="mbtn mbtn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="mbtn mbtn-cancel" onclick="closeCadastroModal()">Cancelar</button>
       <button class="mbtn mbtn-primary">Registrar ✦</button>
+    </div>
+    <div class="modal-switch">
+      Já tem conta? <a href="#" onclick="switchToLogin(); return false;">Fazer login</a>
+    </div>
+  </div>
+</div>
+ 
+<!-- MODAL LOGIN -->
+<div id="modal-login-overlay" onclick="handleLoginOverlayClick(event)">
+  <div id="modal-login">
+    <button class="close-login-btn" onclick="closeLoginModal()">✕</button>
+    <h2>⚔ Login ⚔</h2>
+    <p>Bem-vindo de volta, aventureiro! Entre para continuar sua jornada.</p>
+    <div class="field-group">
+      <label>E-mail</label>
+      <input type="email" placeholder="seu@email.com">
+    </div>
+    <div class="field-group">
+      <label>Senha</label>
+      <input type="password" placeholder="••••••••">
+    </div>
+    <div id="modal-login-btns">
+      <button class="mbtn mbtn-cancel" onclick="closeLoginModal()">Cancelar</button>
+      <button class="mbtn mbtn-primary">Entrar ✦</button>
+    </div>
+    <div class="modal-switch">
+      Não tem conta? <a href="#" onclick="switchToCadastro(); return false;">Criar conta</a>
     </div>
   </div>
 </div>

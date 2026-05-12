@@ -55,16 +55,42 @@ function spawnParticle() {
 }
 setInterval(spawnParticle, 350);
 
-// ─── MODAL ───────────────────────────────────────────────────
-function showModal() {
-  document.getElementById('modal-overlay').classList.add('open');
+// ─── MODAL CADASTRO ──────────────────────────────────────────
+function showCadastroModal() {
+  document.getElementById('modal-cadastro-overlay').classList.add('open');
 }
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
+function closeCadastroModal() {
+  document.getElementById('modal-cadastro-overlay').classList.remove('open');
 }
-function handleOverlayClick(e) {
-  if (e.target === document.getElementById('modal-overlay')) closeModal();
+function handleCadastroOverlayClick(e) {
+  if (e.target === document.getElementById('modal-cadastro-overlay')) closeCadastroModal();
 }
+
+// ─── MODAL LOGIN ─────────────────────────────────────────────
+function showLoginModal() {
+  document.getElementById('modal-login-overlay').classList.add('open');
+}
+function closeLoginModal() {
+  document.getElementById('modal-login-overlay').classList.remove('open');
+}
+function handleLoginOverlayClick(e) {
+  if (e.target === document.getElementById('modal-login-overlay')) closeLoginModal();
+}
+
+// ─── ALTERNÂNCIA ENTRE MODAIS ────────────────────────────────
+function switchToLogin() {
+  closeCadastroModal();
+  setTimeout(showLoginModal, 200);
+}
+function switchToCadastro() {
+  closeLoginModal();
+  setTimeout(showCadastroModal, 200);
+}
+
+// ─── ESC FECHA QUALQUER MODAL ABERTO ────────────────────────
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Escape') {
+    closeCadastroModal();
+    closeLoginModal();
+  }
 });
