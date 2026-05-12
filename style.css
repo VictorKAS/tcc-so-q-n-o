@@ -418,3 +418,35 @@ body {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(5px); }
 }
+
+#btn-scroll{
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(0.65rem, 1.5vw, 0.9rem);
+  color: #ff8866;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+  text-shadow:
+    0 0 10px rgba(204,34,0,0.8),
+    0 0 25px rgba(204,34,0,0.4),
+    1px 1px 0 rgba(80,0,0,0.9);
+  padding: 0.4em 0;
+  transition: all 0.2s;
+  animation: btnFadeIn 1.5s ease-out 0.5s forwards, redPulse 2.5s ease-in-out 2s infinite;
+  opacity: 0;
+  position: relative;
+}
+@keyframes btnFadeIn {
+  to { opacity: 1; }
+}
+@keyframes redPulse {
+  0%, 100% { text-shadow: 0 0 10px rgba(204,34,0,0.8), 0 0 25px rgba(204,34,0,0.4), 1px 1px 0 rgba(80,0,0,0.9); }
+  50%       { text-shadow: 0 0 18px rgba(255,80,40,1),  0 0 45px rgba(204,34,0,0.7), 1px 1px 0 rgba(80,0,0,0.9); }
+}
+#btn-advance:hover {
+  color: #ffaa88;
+  text-shadow: 0 0 22px rgba(255,80,40,1), 0 0 50px rgba(204,34,0,0.8), 1px 1px 0 rgba(80,0,0,0.9);
+  transform: translateY(-2px);
+}
+#btn-advance:active { transform: translateY(1px); }

@@ -1,0 +1,198 @@
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --teal: #00e5cc;
+  --teal-dark: #009e8e;
+  --amber: #f5a623;
+  --red-btn: #cc2200;
+  --red-btn-glow: #ff4422;
+  --wood: #5c3a1e;
+  --stone: #6b6055;
+  --warm-light: #f5c870;
+  --fire-orange: #e8701a;
+}
+
+body {
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  font-family: 'Press Start 2P', cursive;
+  cursor: default;
+  image-rendering: pixelated;
+}
+
+/* ─── SCENE ─── */
+#scene {
+  position: absolute; inset: 0;
+  background: #1a1008;
+}
+
+/* ─── UI OVERLAY ─── */
+#ui {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 10;
+  padding: 2rem;
+}
+
+/* Dark vignette around edges */
+#ui::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.6) 100%);
+  pointer-events: none;
+}
+
+/* ─── CONTENT CARD ─── */
+#content-card {
+  position: relative;
+  max-width: 680px; width: 92%;
+  text-align: center;
+  padding: 2.4rem 2.8rem 2rem;
+  animation: fadeIn 1.2s ease-out forwards;
+  opacity: 0;
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* Pixel-style border */
+#content-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  border: 3px solid rgba(0,229,204,0.25);
+  border-radius: 2px;
+  background: rgba(10,6,0,0.72);
+  backdrop-filter: blur(4px);
+  z-index: -1;
+  box-shadow:
+    0 0 0 1px rgba(0,229,204,0.1),
+    inset 0 0 40px rgba(245,165,35,0.06);
+}
+
+/* ─── TITLE ─── */
+#page-title {
+  font-size: clamp(1rem, 2.8vw, 1.5rem);
+  color: var(--teal);
+  text-shadow:
+    0 0 12px rgba(0,229,204,0.8),
+    0 0 30px rgba(0,229,204,0.4),
+    2px 2px 0 rgba(0,80,70,0.8);
+  letter-spacing: 0.05em;
+  margin-bottom: 1.8rem;
+  line-height: 1.4;
+  animation: titleGlow 3s ease-in-out infinite alternate;
+}
+@keyframes titleGlow {
+  from { text-shadow: 0 0 12px rgba(0,229,204,0.8), 0 0 30px rgba(0,229,204,0.4), 2px 2px 0 rgba(0,80,70,0.8); }
+  to   { text-shadow: 0 0 20px rgba(0,229,204,1),   0 0 50px rgba(0,229,204,0.6), 2px 2px 0 rgba(0,80,70,0.8); }
+}
+
+/* ─── BODY TEXT ─── */
+#page-body {
+  font-size: clamp(0.6rem, 1.4vw, 0.78rem);
+  color: rgba(255,240,200,0.92);
+  line-height: 2.1;
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.9), 1px 1px 0 rgba(0,0,0,0.6);
+  margin-bottom: 2rem;
+}
+#page-body strong {
+  color: var(--warm-light);
+  text-shadow: 0 0 8px rgba(245,200,66,0.5), 0 1px 4px rgba(0,0,0,0.9);
+}
+
+/* ─── SEPARATOR ─── */
+.separator {
+  width: 60%; height: 1px;
+  margin: 0 auto 2rem;
+  background: linear-gradient(to right, transparent, rgba(0,229,204,0.4), transparent);
+}
+
+/* ─── AVANÇAR BUTTON ─── */
+#btn-advance {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(0.65rem, 1.5vw, 0.9rem);
+  color: #ff8866;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+  text-shadow:
+    0 0 10px rgba(204,34,0,0.8),
+    0 0 25px rgba(204,34,0,0.4),
+    1px 1px 0 rgba(80,0,0,0.9);
+  padding: 0.4em 0;
+  transition: all 0.2s;
+  animation: btnFadeIn 1.5s ease-out 0.5s forwards, redPulse 2.5s ease-in-out 2s infinite;
+  opacity: 0;
+  position: relative;
+}
+@keyframes btnFadeIn {
+  to { opacity: 1; }
+}
+@keyframes redPulse {
+  0%, 100% { text-shadow: 0 0 10px rgba(204,34,0,0.8), 0 0 25px rgba(204,34,0,0.4), 1px 1px 0 rgba(80,0,0,0.9); }
+  50%       { text-shadow: 0 0 18px rgba(255,80,40,1),  0 0 45px rgba(204,34,0,0.7), 1px 1px 0 rgba(80,0,0,0.9); }
+}
+#btn-advance:hover {
+  color: #ffaa88;
+  text-shadow: 0 0 22px rgba(255,80,40,1), 0 0 50px rgba(204,34,0,0.8), 1px 1px 0 rgba(80,0,0,0.9);
+  transform: translateY(-2px);
+}
+#btn-advance:active { transform: translateY(1px); }
+
+/* Arrow after button */
+#btn-advance::after {
+  content: ' ▶';
+  opacity: 0.7;
+  animation: arrowBounce 1s ease-in-out infinite;
+}
+@keyframes arrowBounce {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(4px); }
+}
+
+/* ─── FIRE FLICKER (ambient light from scene) ─── */
+#fire-light {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 28%; height: 45%;
+  background: radial-gradient(ellipse at 20% 80%, rgba(230,100,20,0.18) 0%, transparent 70%);
+  pointer-events: none;
+  animation: flicker 0.15s ease-in-out infinite alternate;
+  z-index: 5;
+}
+@keyframes flicker {
+  from { opacity: 0.7; }
+  to   { opacity: 1; }
+}
+
+/* ─── FLOATING DUST PARTICLES ─── */
+.dust {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(245,200,100,0.6);
+  pointer-events: none;
+  animation: floatDust linear infinite;
+}
+@keyframes floatDust {
+  0%   { transform: translateY(0) translateX(0);   opacity: 0; }
+  15%  { opacity: 0.8; }
+  85%  { opacity: 0.5; }
+  100% { transform: translateY(-120px) translateX(20px); opacity: 0; }
+}
+
+/* ─── PIXEL SCANLINE OVERLAY ─── */
+#scanlines {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.04) 3px,
+    rgba(0,0,0,0.04) 4px
+  );
+  pointer-events: none;
+  z-index: 20;
+}

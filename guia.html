@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM BOK – Guia do Aventureiro</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+<!-- SCENE: pixel-art tavern interior drawn in SVG -->
+<div id="scene">
+
+  <!-- BASE BACKGROUND: warm stone floor + dark walls -->
+  <svg id="scene-bg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
+    viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice"
+    style="position:absolute;inset:0;">
+
+    <!-- ── BACKGROUND WALL ── -->
+    <rect x="0" y="0" width="1000" height="600" fill="#1c1108"/>
+
+    <!-- Wall warm tone -->
+    <rect x="0" y="0" width="1000" height="440" fill="#2e1d0a"/>
+
+    <!-- Stone wall texture (horizontal bands) -->
+    <rect x="0" y="0"   width="1000" height="2" fill="#241508" opacity="0.6"/>
+    <rect x="0" y="30"  width="1000" height="2" fill="#241508" opacity="0.4"/>
+    <rect x="0" y="65"  width="1000" height="2" fill="#241508" opacity="0.4"/>
+    <rect x="0" y="100" width="1000" height="2" fill="#241508" opacity="0.4"/>
+    <rect x="0" y="135" width="1000" height="2" fill="#241508" opacity="0.4"/>
+    <rect x="0" y="170" width="1000" height="2" fill="#241508" opacity="0.4"/>
+    <rect x="0" y="205" width="1000" height="2" fill="#241508" opacity="0.4"/>
+    <rect x="0" y="240" width="1000" height="2" fill="#241508" opacity="0.4"/>
+    <rect x="0" y="275" width="1000" height="2" fill="#241508" opacity="0.4"/>
+    <rect x="0" y="310" width="1000" height="2" fill="#241508" opacity="0.4"/>
+    <rect x="0" y="345" width="1000" height="2" fill="#241508" opacity="0.4"/>
+    <rect x="0" y="380" width="1000" height="2" fill="#241508" opacity="0.4"/>
+    <rect x="0" y="415" width="1000" height="2" fill="#241508" opacity="0.4"/>
+
+    <!-- ── CEILING WOODEN BEAMS ── -->
+    <rect x="0"   y="0"  width="1000" height="60"  fill="#3a2008"/>
+    <rect x="0"   y="0"  width="1000" height="58"  fill="#4a2a10" opacity="0.8"/>
+    <!-- Beam planks -->
+    <rect x="0"   y="0"  width="1000" height="14"  fill="#5c3618"/>
+    <rect x="0"   y="14" width="1000" height="2"   fill="#2a1408"/>
+    <rect x="0"   y="28" width="1000" height="14"  fill="#523010"/>
+    <rect x="0"   y="42" width="1000" height="2"   fill="#2a1408"/>
+    <rect x="0"   y="44" width="1000" height="14"  fill="#5c3618"/>
+    <!-- Vertical beams -->
+    <rect x="160" y="0" width="18" height="80" fill="#3a2008"/>
+    <rect x="162" y="0" width="14" height="80" fill="#4a2a10"/>
+    <rect x="370" y="0" width="18" height="80" fill="#3a2008"/>
+    <rect x="372" y="0" width="14" height="80" fill="#4a2a10"/>
+    <rect x="600" y="0" width="18" height="80" fill="#3a2008"/>
+    <rect x="602" y="0" width="14" height="80" fill="#4a2a10"/>
+    <rect x="820" y="0" width="18" height="80" fill="#3a2008"/>
+    <rect x="822" y="0" width="14" height="80" fill="#4a2a10"/>
+    <!-- Beam shadows -->
+    <rect x="0" y="56" width="1000" height="6" fill="#1a0c04" opacity="0.7"/>
+
+    <!-- ── STONE ARCH (center) ── -->
+    <!-- Arch outer frame -->
+    <path d="M310,60 L310,600 L690,600 L690,60 Q690,200 500,200 Q310,200 310,60 Z" fill="#3d2a18"/>
+    <!-- Arch inner (darker opening) -->
+    <path d="M325,75 L325,600 L675,600 L675,75 Q675,210 500,210 Q325,210 325,75 Z" fill="#1a1008"/>
+    <!-- Arch stone detail blocks -->
+    <rect x="308" y="60"  width="22" height="18" fill="#4a3220" rx="1"/>
+    <rect x="308" y="84"  width="22" height="18" fill="#3e2818" rx="1"/>
+    <rect x="308" y="108" width="22" height="18" fill="#4a3220" rx="1"/>
+    <rect x="308" y="132" width="22" height="18" fill="#3e2818" rx="1"/>
+    <rect x="308" y="156" width="22" height="18" fill="#4a3220" rx="1"/>
+    <rect x="308" y="180" width="22" height="18" fill="#3e2818" rx="1"/>
+    <rect x="670" y="60"  width="22" height="18" fill="#4a3220" rx="1"/>
+    <rect x="670" y="84"  width="22" height="18" fill="#3e2818" rx="1"/>
+    <rect x="670" y="108" width="22" height="18" fill="#4a3220" rx="1"/>
+    <rect x="670" y="132" width="22" height="18" fill="#3e2818" rx="1"/>
+    <rect x="670" y="156" width="22" height="18" fill="#4a3220" rx="1"/>
+    <rect x="670" y="180" width="22" height="18" fill="#3e2818" rx="1"/>
+    <!-- Keystone top arch -->
+    <rect x="486" y="193" width="28" height="22" fill="#5a4028" rx="1"/>
+
+    <!-- ── FIREPLACE (left) ── -->
+    <!-- Fireplace surround -->
+    <rect x="20" y="200" width="180" height="240" fill="#3a2810"/>
+    <rect x="20" y="200" width="180" height="6"   fill="#4e3818"/>
+    <!-- Stone blocks around fireplace -->
+    <rect x="20" y="206" width="30" height="25" fill="#4a3820" rx="1"/>
+    <rect x="52" y="206" width="30" height="25" fill="#3e2e18" rx="1"/>
+    <rect x="84" y="206" width="30" height="25" fill="#4a3820" rx="1"/>
+    <rect x="116" y="206" width="30" height="25" fill="#3e2e18" rx="1"/>
+    <rect x="148" y="206" width="30" height="25" fill="#4a3820" rx="1"/>
+    <rect x="180" y="206" width="20" height="25" fill="#3e2e18" rx="1"/>
+    <!-- Fireplace opening -->
+    <rect x="40" y="260" width="140" height="170" fill="#0d0804"/>
+    <rect x="40" y="258" width="140" height="8"   fill="#2a1a08"/>
+    <!-- Fire glow base -->
+    <ellipse cx="110" cy="420" rx="65" ry="15" fill="#e8600a" opacity="0.5"/>
+    <!-- Fire layers -->
+    <ellipse cx="110" cy="390" rx="50" ry="40" fill="#e8600a" opacity="0.7"/>
+    <ellipse cx="100" cy="375" rx="35" ry="50" fill="#f08020" opacity="0.8"/>
+    <ellipse cx="118" cy="370" rx="28" ry="45" fill="#f5a020" opacity="0.7"/>
+    <ellipse cx="108" cy="360" rx="20" ry="38" fill="#ffd060" opacity="0.6"/>
+    <ellipse cx="112" cy="350" rx="12" ry="25" fill="#fff0a0" opacity="0.5"/>
+    <!-- Logs -->
+    <rect x="55" y="415" width="110" height="10" rx="4" fill="#2a1408"/>
+    <rect x="70" y="412" width="80"  height="8"  rx="3" fill="#3a1e0a"/>
+    <!-- Mantle shelf -->
+    <rect x="10" y="196" width="200" height="12" fill="#5c3a18"/>
+    <rect x="10" y="196" width="200" height="4"  fill="#6e4a22"/>
+    <!-- Items on mantle: bottles + candle -->
+    <rect x="25"  y="170" width="10" height="26" rx="2" fill="#4a6a30"/>
+    <rect x="38"  y="175" width="8"  height="21" rx="2" fill="#6a3a50"/>
+    <rect x="50"  y="168" width="12" height="28" rx="2" fill="#3a5a70"/>
+    <rect x="165" y="174" width="8"  height="22" rx="2" fill="#8a6020"/>
+    <!-- Candle flame on mantle -->
+    <rect x="175" y="165" width="4" height="14" fill="#c8a020"/>
+    <ellipse cx="177" cy="163" rx="4" ry="6" fill="#ffd060" opacity="0.9"/>
+    <ellipse cx="177" cy="160" rx="2" ry="4" fill="#fff5c0" opacity="0.7"/>
+
+    <!-- Fire ambient glow on left wall -->
+    <radialGradient id="fireGlow" cx="15%" cy="75%" r="35%">
+      <stop offset="0%" stop-color="#e86010" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#e86010" stop-opacity="0"/>
+    </radialGradient>
+    <rect x="0" y="0" width="1000" height="600" fill="url(#fireGlow)"/>
+
+    <!-- ── SHELVES (left wall above fireplace) ── -->
+    <rect x="20"  y="80"  width="200" height="8" fill="#5c3a18"/>
+    <rect x="20"  y="120" width="200" height="8" fill="#5c3a18"/>
+    <rect x="20"  y="160" width="200" height="8" fill="#5c3a18"/>
+    <!-- Bottles & potions on shelves -->
+    <!-- Shelf 1 (y=80) -->
+    <rect x="28"  y="60" width="9"  height="20" rx="2" fill="#5a8040"/>
+    <rect x="40"  y="56" width="10" height="24" rx="2" fill="#80405a"/>
+    <rect x="53"  y="62" width="8"  height="18" rx="2" fill="#4070a0"/>
+    <rect x="64"  y="58" width="10" height="22" rx="2" fill="#806020"/>
+    <rect x="77"  y="62" width="8"  height="18" rx="2" fill="#608040"/>
+    <rect x="88"  y="55" width="9"  height="25" rx="2" fill="#703050"/>
+    <rect x="100" y="60" width="10" height="20" rx="2" fill="#305080"/>
+    <rect x="113" y="58" width="8"  height="22" rx="2" fill="#508030"/>
+    <rect x="124" y="62" width="9"  height="18" rx="2" fill="#804020"/>
+    <rect x="136" y="56" width="10" height="24" rx="2" fill="#2a6080"/>
+    <!-- Small candle on shelf 1 -->
+    <rect x="155" y="67" width="6" height="13" fill="#d0b060"/>
+    <ellipse cx="158" cy="66" rx="4" ry="5" fill="#ffd060" opacity="0.9"/>
+    <!-- Shelf 2 (y=120) -->
+    <rect x="28"  y="100" width="9"  height="20" rx="2" fill="#60804a"/>
+    <rect x="40"  y="96"  width="10" height="24" rx="2" fill="#7a3a50"/>
+    <rect x="53"  y="102" width="8"  height="18" rx="2" fill="#3a6090"/>
+    <rect x="64"  y="98"  width="10" height="22" rx="2" fill="#7a5a18"/>
+    <rect x="77"  y="100" width="8"  height="20" rx="2" fill="#5a7038"/>
+    <rect x="88"  y="94"  width="9"  height="26" rx="2" fill="#682848"/>
+    <rect x="100" y="100" width="10" height="20" rx="2" fill="#284878"/>
+
+    <!-- ── WINDOW (back center-right) ── -->
+    <rect x="540" y="80" width="140" height="130" rx="2" fill="#0a1828"/>
+    <!-- Window frame -->
+    <rect x="536" y="76"  width="148" height="8"  fill="#5c3a18"/>
+    <rect x="536" y="202" width="148" height="8"  fill="#5c3a18"/>
+    <rect x="536" y="76"  width="8"   height="138" fill="#5c3a18"/>
+    <rect x="676" y="76"  width="8"   height="138" fill="#5c3a18"/>
+    <!-- Window cross bars -->
+    <rect x="536" y="138" width="148" height="6" fill="#5c3a18"/>
+    <rect x="606" y="76"  width="6"   height="138" fill="#5c3a18"/>
+    <!-- Moon / night sky in window -->
+    <rect x="540" y="80" width="140" height="130" fill="#0d1e36"/>
+    <ellipse cx="610" cy="120" rx="22" ry="22" fill="#d4c890"/>
+    <ellipse cx="620" cy="115" rx="15" ry="15" fill="#0d1e36"/>
+    <!-- Stars in window -->
+    <circle cx="556" cy="90"  r="1.5" fill="#c0c8d0"/>
+    <circle cx="660" cy="88"  r="1.5" fill="#c0c8d0"/>
+    <circle cx="570" cy="180" r="1.5" fill="#c0c8d0"/>
+    <circle cx="650" cy="175" r="1.5" fill="#c0c8d0"/>
+    <circle cx="546" cy="155" r="1"   fill="#c0c8d0"/>
+    <circle cx="668" cy="145" r="1"   fill="#c0c8d0"/>
+    <!-- Moon glow -->
+    <radialGradient id="moonGlow" cx="61%" cy="20%" r="15%">
+      <stop offset="0%" stop-color="#8ab0e0" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#8ab0e0" stop-opacity="0"/>
+    </radialGradient>
+    <rect x="536" y="76" width="148" height="138" fill="url(#moonGlow)"/>
+
+    <!-- ── SHELVES (right wall) ── -->
+    <rect x="780" y="100" width="210" height="8" fill="#5c3a18"/>
+    <rect x="780" y="150" width="210" height="8" fill="#5c3a18"/>
+    <rect x="780" y="200" width="210" height="8" fill="#5c3a18"/>
+    <!-- Bottles right shelves -->
+    <rect x="790" y="80"  width="9"  height="20" rx="2" fill="#608048"/>
+    <rect x="802" y="76"  width="10" height="24" rx="2" fill="#7a4058"/>
+    <rect x="815" y="82"  width="8"  height="18" rx="2" fill="#406898"/>
+    <rect x="826" y="78"  width="10" height="22" rx="2" fill="#786018"/>
+    <rect x="840" y="80"  width="8"  height="20" rx="2" fill="#587838"/>
+    <rect x="852" y="74"  width="9"  height="26" rx="2" fill="#682848"/>
+    <rect x="864" y="82"  width="10" height="18" rx="2" fill="#284878"/>
+    <rect x="878" y="78"  width="8"  height="22" rx="2" fill="#507838"/>
+    <rect x="890" y="76"  width="10" height="24" rx="2" fill="#7a3820"/>
+    <rect x="903" y="82"  width="9"  height="18" rx="2" fill="#286078"/>
+    <!-- Right shelf 2 -->
+    <rect x="790" y="130" width="9"  height="20" rx="2" fill="#587040"/>
+    <rect x="802" y="126" width="10" height="24" rx="2" fill="#803858"/>
+    <rect x="815" y="132" width="8"  height="18" rx="2" fill="#385888"/>
+    <rect x="826" y="128" width="10" height="22" rx="2" fill="#705810"/>
+    <rect x="840" y="130" width="8"  height="20" rx="2" fill="#507030"/>
+    <rect x="852" y="124" width="9"  height="26" rx="2" fill="#602040"/>
+    <!-- Candle right wall -->
+    <rect x="940" y="138" width="6" height="16" fill="#d0b060"/>
+    <ellipse cx="943" cy="137" rx="5" ry="6" fill="#ffd060" opacity="0.9"/>
+    <ellipse cx="943" cy="133" rx="3" ry="4" fill="#fff5c0" opacity="0.7"/>
+
+    <!-- ── FLOOR ── -->
+    <rect x="0" y="440" width="1000" height="160" fill="#2a1a08"/>
+    <!-- Floor tiles -->
+    <rect x="0"   y="440" width="1000" height="4" fill="#1a1006"/>
+    <rect x="0"   y="480" width="1000" height="3" fill="#1a1006"/>
+    <rect x="0"   y="520" width="1000" height="3" fill="#1a1006"/>
+    <rect x="0"   y="560" width="1000" height="3" fill="#1a1006"/>
+    <!-- Tile vertical lines -->
+    <rect x="100" y="440" width="2" height="160" fill="#1a1006" opacity="0.5"/>
+    <rect x="200" y="440" width="2" height="160" fill="#1a1006" opacity="0.5"/>
+    <rect x="300" y="440" width="2" height="160" fill="#1a1006" opacity="0.5"/>
+    <rect x="400" y="440" width="2" height="160" fill="#1a1006" opacity="0.5"/>
+    <rect x="500" y="440" width="2" height="160" fill="#1a1006" opacity="0.5"/>
+    <rect x="600" y="440" width="2" height="160" fill="#1a1006" opacity="0.5"/>
+    <rect x="700" y="440" width="2" height="160" fill="#1a1006" opacity="0.5"/>
+    <rect x="800" y="440" width="2" height="160" fill="#1a1006" opacity="0.5"/>
+    <rect x="900" y="440" width="2" height="160" fill="#1a1006" opacity="0.5"/>
+    <!-- Floor warm gradient from fire -->
+    <rect x="0" y="440" width="300" height="160" fill="#3a1a08" opacity="0.4"/>
+
+    <!-- ── BOOK ON TABLE (center bottom) ── -->
+    <!-- Table -->
+    <rect x="390" y="490" width="220" height="90" rx="3" fill="#3a2010"/>
+    <rect x="390" y="490" width="220" height="8"  rx="2" fill="#4e2e18"/>
+    <!-- Table legs -->
+    <rect x="400" y="578" width="16" height="22" fill="#2e1808"/>
+    <rect x="584" y="578" width="16" height="22" fill="#2e1808"/>
+    <!-- Open book -->
+    <rect x="408" y="462" width="184" height="34" rx="2" fill="#e8d898"/>
+    <!-- Book spine -->
+    <rect x="497" y="460" width="6" height="38" fill="#c0a060" rx="1"/>
+    <!-- Book pages lines left -->
+    <line x1="418" y1="470" x2="494" y2="470" stroke="#9a8848" stroke-width="1" opacity="0.5"/>
+    <line x1="418" y1="476" x2="494" y2="476" stroke="#9a8848" stroke-width="1" opacity="0.5"/>
+    <line x1="418" y1="482" x2="494" y2="482" stroke="#9a8848" stroke-width="1" opacity="0.5"/>
+    <line x1="418" y1="488" x2="494" y2="488" stroke="#9a8848" stroke-width="1" opacity="0.5"/>
+    <!-- Book pages lines right -->
+    <line x1="506" y1="470" x2="582" y2="470" stroke="#9a8848" stroke-width="1" opacity="0.5"/>
+    <line x1="506" y1="476" x2="582" y2="476" stroke="#9a8848" stroke-width="1" opacity="0.5"/>
+    <line x1="506" y1="482" x2="582" y2="482" stroke="#9a8848" stroke-width="1" opacity="0.5"/>
+    <line x1="506" y1="488" x2="582" y2="488" stroke="#9a8848" stroke-width="1" opacity="0.5"/>
+    <!-- Book candle left -->
+    <rect x="380" y="456" width="8" height="20" fill="#d0b060"/>
+    <ellipse cx="384" cy="455" rx="5" ry="7" fill="#ffd060" opacity="0.95"/>
+    <ellipse cx="384" cy="451" rx="3" ry="5" fill="#fff8d0" opacity="0.7"/>
+    <!-- Book candle right -->
+    <rect x="612" y="456" width="8" height="20" fill="#d0b060"/>
+    <ellipse cx="616" cy="455" rx="5" ry="7" fill="#ffd060" opacity="0.95"/>
+    <ellipse cx="616" cy="451" rx="3" ry="5" fill="#fff8d0" opacity="0.7"/>
+
+    <!-- ── OVERALL WARM AMBIENT ── -->
+    <radialGradient id="ambientWarm" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#e87820" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#e87820" stop-opacity="0"/>
+    </radialGradient>
+    <rect x="0" y="0" width="1000" height="600" fill="url(#ambientWarm)"/>
+
+    <!-- Frame shadow inset -->
+    <rect x="0" y="0" width="1000" height="600"
+      fill="none" stroke="#000" stroke-width="60" stroke-opacity="0.5"/>
+  </svg>
+
+  <!-- Fire ambient light overlay (CSS animated) -->
+  <div id="fire-light"></div>
+
+  <!-- Particle layer -->
+  <div id="particles-layer"></div>
+</div>
+
+<!-- Scanline retro overlay -->
+<div id="scanlines"></div>
+
+<!-- UI OVERLAY -->
+<div id="ui">
+  <div id="content-card">
+
+    <h1 id="page-title">Guia do Aventureiro</h1>
+
+    <div class="separator"></div>
+
+    <p id="page-body">
+      Para começar a aventura, primeiro devemos saber<br>
+      quais são os grupos e processos que compõem o<br>
+      gerenciamento de projetos usados no <strong>PMBOK</strong>.<br><br>
+      A seguir você fará um mini-game que conectará<br>
+      os processos com o respectivo grupo de<br>
+      gerenciamento, fazendo assim ter um melhor<br>
+      entendimento de como prosseguir<br>
+      em nossa jornada.
+    </p>
+
+    <div class="separator"></div>
+
+    <button id="btn-advance" onclick="window.location.href='pmbok-game.html'">
+      Avançar
+    </button>
+
+  </div>
+</div>
+
+<script src="main2.js"></script>
+</body>
+</html>
