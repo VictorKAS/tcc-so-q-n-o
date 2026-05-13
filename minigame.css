@@ -257,7 +257,28 @@ body {
   letter-spacing: 0.05em;
   transition: all 0.2s;
 }
+
+#btn-advance {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.55rem;
+  color: rgba(255,255,255,0.55);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 3px;
+  padding: 0.4em 0.8em;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+  margin-right: 76vw;
+}
+
 #btn-back:hover {
+  color: rgba(255,255,255,0.9);
+  border-color: rgba(255,255,255,0.5);
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+}
+
+#btn-advance:hover {
   color: rgba(255,255,255,0.9);
   border-color: rgba(255,255,255,0.5);
   box-shadow: 0 0 10px rgba(255,255,255,0.1);
