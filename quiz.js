@@ -367,14 +367,18 @@ document.addEventListener('DOMContentLoaded', () => {
   startLevel(state.level);
   $('btn-confirm').addEventListener('click', onConfirm);
   $('btn-back').addEventListener('click', () => history.back());
-  $('btn-result-close').addEventListener('click', () => {
-    $('result-overlay').classList.remove('open');
-    const outcome = $('btn-result-close').dataset.outcome;
-    if (outcome === 'next')    advanceLevel();
-    else                       restartLevel();
-  });
   $('btn-result-back').addEventListener('click', () => history.back());
 });
+
+// ─── SHUFFLE ───────────────────────────────────────────────
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 // ─── START / RESTART ───────────────────────────────────────
 function startLevel(lvl) {
@@ -385,6 +389,7 @@ function startLevel(lvl) {
   state.score     = 0;
   state.selected  = null;
   state.confirmed = false;
+  state.questions = shuffle(LEVELS[lvl]); // embaralha a cada sessão
   updateHpBars();
   renderQuestion();
 }
@@ -402,13 +407,13 @@ function advanceLevel() {
 
 // ─── RENDER QUESTION ───────────────────────────────────────
 function renderQuestion() {
-  const questions = LEVELS[state.level];
+  const questions = state.questions;
   const q         = questions[state.qIndex];
 
   state.selected  = null;
   state.confirmed = false;
 
-  $('q-label').textContent  = q.group;
+  $('q-label').textContent  = `${state.qIndex + 1} - ${q.group.replace(/^\d+\s*-\s*/, '')}`;
   $('q-text').textContent   = q.text;
   $('q-counter').textContent = `${state.qIndex + 1} / ${questions.length}`;
   $('feedback').textContent  = '';
@@ -451,7 +456,7 @@ function onConfirm() {
   if (state.selected === null || state.confirmed) return;
   state.confirmed = true;
 
-  const q       = LEVELS[state.level][state.qIndex];
+  const q       = state.questions[state.qIndex];
   const correct = state.selected === q.correct;
 
   // Highlight options
@@ -496,7 +501,7 @@ function onConfirm() {
   // Advance to next question or end of level
   setTimeout(() => {
     state.qIndex++;
-    if (state.qIndex >= LEVELS[state.level].length) {
+    if (state.qIndex >= state.questions.length) {
       const outcome = state.score >= 6 ? 'victory' : 'defeat';
       showResult(outcome);
     } else {
@@ -546,18 +551,17 @@ function showResult(outcome) {
     victory: {
       icon:  isLast ? '🏆' : '⚔️',
       title: isLast ? 'Mestre do PMBOK!' : `Level ${state.level} Vencido!`,
-      score: `${state.score} / ${LEVELS[state.level].length}`,
+      score: `${state.score} / ${state.questions.length}`,
       msg:   isLast
         ? `Parabéns! Você completou todos os níveis!\nTotal de acertos: ${state.totalScore} / 30`
-        : `Você derrotou o monstro!\nPrepare-se para o ${LEVEL_LABELS[nextLevel]}!`,
-      btnLabel: isLast ? 'Jogar Novamente' : `Próximo Level ▶`,
+        : `Você derrotou o monstro!\nPrepare-se para o ${LEVEL_LABELS[nextLevel]}!`,      btnLabel: isLast ? 'Jogar Novamente' : `Próximo Level ▶`,
       btnOutcome: isLast ? 'restart-all' : 'next',
     },
     defeat: {
       icon:  '💀',
       title: 'Derrota!',
-      score: `${state.score} / ${LEVELS[state.level].length}`,
-      msg:   `O monstro foi mais forte desta vez.\nAcertou ${state.score} de ${LEVELS[state.level].length}.\nTente novamente!`,
+      score: `${state.score} / ${state.questions.length}`,
+      msg:   `O monstro foi mais forte desta vez.\nAcertou ${state.score} de ${state.questions.length}.\nTente novamente!`,
       btnLabel: 'Tentar Novamente',
       btnOutcome: 'retry',
     },
