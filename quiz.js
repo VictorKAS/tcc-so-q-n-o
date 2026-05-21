@@ -1,9 +1,8 @@
 // ═══════════════════════════════════════════════════════════
-//  PMBOK QUIZ — 3 níveis × 10 perguntas
+//  PMBOK QUIZ — Níveis, Batalhas e Sistema de Cartas Suporte
 // ═══════════════════════════════════════════════════════════
 
 const LEVELS = {
-
   // ── LEVEL 1: FÁCIL ──────────────────────────────────────
   1: [
     {
@@ -337,6 +336,41 @@ const LEVELS = {
   ],
 };
 
+// ─── BASE DE DADOS DAS CARTAS DE SUPORTE ────────────────────
+const CARDS_DB = [
+  // COMUM (Amarelo)
+  { id: 'comum_espada', name: 'Espada Simples', type: 'sword', rarity: 'comum', desc: '+1 de Dano', value: 1 },
+  { id: 'comum_escudo', name: 'Escudo Simples', type: 'shield', rarity: 'comum', desc: 'Metade do Dano', value: 0.5 },
+  { id: 'comum_bota', name: 'Bota Velha', type: 'boots', rarity: 'comum', desc: 'Pular Questão', value: 0 },
+  
+  // RARO (Azul)
+  { id: 'raro_espada', name: 'Espada Dupla', type: 'sword', rarity: 'raro', desc: '+1.5 de Dano', value: 1.5 },
+  { id: 'raro_bota', name: 'Bota Ágil', type: 'boots', rarity: 'raro', desc: 'Pular Questão', value: 0 },
+  { id: 'raro_pocao', name: 'Poção Dupla', type: 'potion', rarity: 'raro', desc: 'Curar 1.5 Vida', value: 1.5 },
+
+  // ÉPICO (Roxo)
+  { id: 'epico_espada', name: 'Três Espadas', type: 'sword', rarity: 'epico', desc: '+2 de Dano', value: 2 },
+  { id: 'epico_escudo', name: 'Escudo de Grifo', type: 'shield', rarity: 'epico', desc: 'Bloquear Dano', value: 0 }, 
+  { id: 'epico_pocao', name: 'Frasco Triplo', type: 'potion', rarity: 'epico', desc: 'Curar 2.5 Vida', value: 2.5 },
+
+  // LENDÁRIO (Laranja)
+  { id: 'lendario_pocao', name: 'Elixir Ancestral', type: 'potion', rarity: 'lendario', desc: 'Curar Total', value: 5 }
+];
+
+// ─── MAPEAMENTO DIRETO DOS ARQUIVOS PNG DO PROJETO ──────────
+const CARD_IMAGES = {
+  comum_espada: 'input_file_4.png',
+  comum_escudo: 'input_file_10.png',
+  comum_bota: 'input_file_9.png',
+  raro_espada: 'input_file_2.png',
+  raro_bota: 'input_file_1.png',
+  raro_pocao: 'input_file_8.png',
+  epico_espada: 'input_file_3.png',
+  epico_escudo: 'input_file_5.png',
+  epico_pocao: 'input_file_6.png',
+  lendario_pocao: 'input_file_7.png'
+};
+
 // ─── CONFIGURAÇÃO ──────────────────────────────────────────
 const MAX_HP   = 5;
 const MAX_LEVEL = 3;
@@ -355,8 +389,10 @@ let state = {
   confirmed: false,
   heroHp:    MAX_HP,
   monsterHp: MAX_HP,
-  score:     0,       // acertos no nível atual
-  totalScore: 0,      // acertos totais
+  score:     0,       
+  totalScore: 0,      
+  hand:      [],      
+  activeCardIndex: null, 
 };
 
 // ─── REFS ──────────────────────────────────────────────────
@@ -380,6 +416,35 @@ function shuffle(arr) {
   return a;
 }
 
+// ─── DRAW SYSTEM (Raridades e Distribuição Ponderada) ──────
+function getRarityByProbability() {
+  const roll = Math.random() * 100;
+  if (roll < 5) return 'lendario';   
+  if (roll < 20) return 'epico';     
+  if (roll < 50) return 'raro';      
+  return 'comum';                    
+}
+
+function generateSupportCards() {
+  const selectedCards = [];
+  const dbShuffled = shuffle(CARDS_DB);
+
+  while (selectedCards.length < 3) {
+    const desiredRarity = getRarityByProbability();
+    const found = dbShuffled.find(c => c.rarity === desiredRarity && !selectedCards.some(sc => sc.id === c.id));
+    
+    if (found) {
+      selectedCards.push({ ...found, used: false });
+    } else {
+      const fallback = dbShuffled.find(c => !selectedCards.some(sc => sc.id === c.id));
+      if (fallback) selectedCards.push({ ...fallback, used: false });
+    }
+  }
+  state.hand = selectedCards;
+  state.activeCardIndex = null;
+  renderSupportHand();
+}
+
 // ─── START / RESTART ───────────────────────────────────────
 function startLevel(lvl) {
   state.level     = lvl;
@@ -389,8 +454,10 @@ function startLevel(lvl) {
   state.score     = 0;
   state.selected  = null;
   state.confirmed = false;
-  state.questions = shuffle(LEVELS[lvl]); // embaralha a cada sessão
+  state.questions = shuffle(LEVELS[lvl]); 
+  
   updateHpBars();
+  generateSupportCards(); 
   renderQuestion();
 }
 
@@ -400,7 +467,6 @@ function advanceLevel() {
   if (state.level < MAX_LEVEL) {
     startLevel(state.level + 1);
   } else {
-    // Vitória final
     showResult('champion');
   }
 }
@@ -421,7 +487,6 @@ function renderQuestion() {
   $('level-badge').textContent = LEVEL_LABELS[state.level];
   $('level-badge').dataset.lvl = state.level;
 
-  // Re-trigger card animation
   const card = $('quiz-card');
   card.style.animation = 'none';
   void card.offsetWidth;
@@ -451,6 +516,81 @@ function onSelect(idx) {
   $('btn-confirm').disabled = false;
 }
 
+// ─── INTERAÇÃO COM CARTAS SUPORTE ──────────────────────────
+function selectCard(idx) {
+  if (state.confirmed) return;
+  const card = state.hand[idx];
+  if (!card || card.used) return;
+
+  // 1. POÇÃO (Consumo Instantâneo de Vida)
+  if (card.type === 'potion') {
+    card.used = true;
+    const oldHp = state.heroHp;
+    state.heroHp = Math.min(MAX_HP, state.heroHp + card.value);
+    const healAmount = (state.heroHp - oldHp).toFixed(1);
+    
+    updateHpBars();
+    spawnDmg('hero-wrap', 'hit', `+${healAmount} ♥`);
+    triggerHit('hero', 'do-hit');
+    renderSupportHand();
+    return;
+  }
+
+  // 2. BOTA (Uso Instantâneo: Pula a rodada atual)
+  if (card.type === 'boots') {
+    card.used = true;
+    renderSupportHand();
+    spawnDmg('hero-wrap', 'hit', `Esquiva!`);
+    
+    setTimeout(() => {
+      state.qIndex++;
+      if (state.qIndex >= state.questions.length) {
+        showResult(state.score >= 6 ? 'victory' : 'defeat');
+      } else {
+        renderQuestion();
+      }
+    }, 600);
+    return;
+  }
+
+  // 3. ESPADAS / ESCUDOS (Ativação para o Próximo Turno de Combate)
+  if (state.activeCardIndex === idx) {
+    state.activeCardIndex = null;
+  } else {
+    state.activeCardIndex = idx;
+  }
+  renderSupportHand();
+}
+
+// ─── RENDERIZAR INTERFACE DAS CARTAS (Usando os arquivos PNG) ───
+function renderSupportHand() {
+  const handDiv = $('support-hand');
+  if (!handDiv) return;
+  handDiv.innerHTML = '';
+
+  state.hand.forEach((card, idx) => {
+    const cardEl = document.createElement('div');
+    const isActive = state.activeCardIndex === idx;
+    
+    cardEl.className = `support-card card-${card.rarity} ${isActive ? 'active' : ''} ${card.used ? 'used' : ''}`;
+    
+    // Obtém o nome exato do arquivo PNG associado à carta
+    const imgFilename = CARD_IMAGES[card.id] || 'input_file_4.png';
+    cardEl.style.backgroundImage = `url('${imgFilename}')`;
+
+    // Renderiza títulos e descrições diretamente nos pergaminhos superiores e inferiores da imagem
+    cardEl.innerHTML = `
+      <div class="card-header-overlay">${card.name}</div>
+      <div class="card-desc-overlay">${card.desc}</div>
+    `;
+
+    if (!card.used) {
+      cardEl.addEventListener('click', () => selectCard(idx));
+    }
+    handDiv.appendChild(cardEl);
+  });
+}
+
 // ─── CONFIRM ───────────────────────────────────────────────
 function onConfirm() {
   if (state.selected === null || state.confirmed) return;
@@ -459,7 +599,6 @@ function onConfirm() {
   const q       = state.questions[state.qIndex];
   const correct = state.selected === q.correct;
 
-  // Highlight options
   document.querySelectorAll('.opt').forEach((b, i) => {
     b.disabled = true;
     b.classList.remove('selected');
@@ -468,27 +607,55 @@ function onConfirm() {
   });
   $('btn-confirm').disabled = true;
 
+  let bonusDmg = 0;
+  let dmgReductionFactor = 1; 
+
+  if (state.activeCardIndex !== null) {
+    const activeCard = state.hand[state.activeCardIndex];
+    if (activeCard.type === 'sword') {
+      bonusDmg = activeCard.value;
+    } else if (activeCard.type === 'shield') {
+      dmgReductionFactor = activeCard.value;
+    }
+    activeCard.used = true; 
+  }
+
   if (correct) {
     state.score++;
     state.totalScore++;
-    state.monsterHp--;
-    $('feedback').textContent = '✔ Correto! Monstro atacado!';
+    
+    const damage = 1 + bonusDmg;
+    state.monsterHp -= damage;
+    
+    $('feedback').textContent = `✔ Correto! Monstro sofreu ${damage} HP de dano!`;
     $('feedback').className   = 'ok';
+    
     triggerAttack('hero',    'do-attack-r');
     triggerHit   ('monster', 'do-hit');
-    spawnDmg('monster-wrap', 'hit', '-1 ♥');
+    spawnDmg('monster-wrap', 'hit', `-${damage} ♥`);
   } else {
-    state.heroHp--;
-    $('feedback').textContent = '✘ Errado! Herói recebeu dano!';
-    $('feedback').className   = 'ko';
-    triggerAttack('monster', 'do-attack-l');
-    triggerHit   ('hero',    'do-hit');
-    spawnDmg('hero-wrap', 'miss', '-1 ♥');
+    const rawDmg = 1;
+    const finalDmg = rawDmg * dmgReductionFactor;
+    state.heroHp -= finalDmg;
+    
+    if (finalDmg > 0) {
+      $('feedback').textContent = `✘ Errado! Herói recebeu ${finalDmg.toFixed(1)} HP de dano!`;
+      $('feedback').className   = 'ko';
+      triggerAttack('monster', 'do-attack-l');
+      triggerHit   ('hero',    'do-hit');
+      spawnDmg('hero-wrap', 'miss', `-${finalDmg} ♥`);
+    } else {
+      $('feedback').textContent = '✘ Errado! O escudo bloqueou todo o dano!';
+      $('feedback').className   = 'ok';
+      triggerAttack('monster', 'do-attack-l');
+      spawnDmg('hero-wrap', 'hit', 'Bloqueado!');
+    }
   }
 
+  state.activeCardIndex = null;
   updateHpBars();
+  renderSupportHand();
 
-  // Check end conditions
   if (state.monsterHp <= 0) {
     setTimeout(() => showResult('victory'), 900);
     return;
@@ -498,7 +665,6 @@ function onConfirm() {
     return;
   }
 
-  // Advance to next question or end of level
   setTimeout(() => {
     state.qIndex++;
     if (state.qIndex >= state.questions.length) {
@@ -554,7 +720,8 @@ function showResult(outcome) {
       score: `${state.score} / ${state.questions.length}`,
       msg:   isLast
         ? `Parabéns! Você completou todos os níveis!\nTotal de acertos: ${state.totalScore} / 30`
-        : `Você derrotou o monstro!\nPrepare-se para o ${LEVEL_LABELS[nextLevel]}!`,      btnLabel: isLast ? 'Jogar Novamente' : `Próximo Level ▶`,
+        : `Você derrotou o monstro!\nPrepare-se para o ${LEVEL_LABELS[nextLevel]}!`,      
+      btnLabel: isLast ? 'Jogar Novamente' : `Próximo Level ▶`,
       btnOutcome: isLast ? 'restart-all' : 'next',
     },
     defeat: {
@@ -588,7 +755,6 @@ function showResult(outcome) {
 }
 
 // btn-result-close handler (set in DOMContentLoaded)
-// outcome: 'next' → advanceLevel, 'retry'/'restart-all' → restartLevel or full reset
 document.addEventListener('DOMContentLoaded', () => {
   $('btn-result-close').addEventListener('click', () => {
     $('result-overlay').classList.remove('open');
